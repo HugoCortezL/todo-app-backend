@@ -9,7 +9,7 @@ export class UserResolver {
         this.repository = new UserRepository()
     }
 
-    @Query(() => User,
+    @Mutation(() => User,
         {
             description: "Login an user"
         }

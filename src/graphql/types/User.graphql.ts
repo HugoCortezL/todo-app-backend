@@ -27,6 +27,12 @@ export class User {
         })
     password: string
 
+    @Field(() => String,
+    {
+        description: "The date of the last login of the user"
+    })
+    lastLogin: string
+    
     @Field(() => [List],
         {
             description: "The lists of the user",

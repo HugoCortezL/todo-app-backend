@@ -42,12 +42,12 @@ export class Todo {
         })
     status: StatusEnum
 
-    @Field(() => Date,
+    @Field(() => String,
         {
             description: "The status of the to-do",
             nullable: true
         })
-    deadline: Date
+    deadline: string
 
 }
 
@@ -72,11 +72,11 @@ export class TodoInput {
         })
     status: StatusEnum
 
-    @Field(() => Date,
+    @Field(() => String,
         {
             description: "The status of the to-do",
             nullable: true
         })
-    deadline: Date
+    deadline: string
 
 }

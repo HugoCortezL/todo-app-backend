@@ -11,7 +11,25 @@ export class UserRepository {
     async login(item: UserLogin): Promise<User> {
         const promiseGetById = Promise.resolve(userModel.findOne({ email: item.email, password: item.password }))
         const user = await promiseGetById
-        return (user as unknown as User)
+        if(user){
+            userModel.updateOne({ _id: user.id }, {
+                $set: {
+                    lastLogin: new Date().toString()
+                }
+            })
+            return (user as unknown as User)
+        }
+        else{
+            const noneUser: User = {
+                id: "",
+                email: "",
+                name: "",
+                password: "",
+                lists: [],
+                lastLogin: new Date().toString()
+            }
+            return noneUser
+        }
     }
 
     async getById(id: string): Promise<User>{
