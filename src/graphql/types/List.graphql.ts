@@ -23,3 +23,19 @@ export class List {
         })
     todos: Todo[]
 }
+
+@InputType()
+export class ListInput {
+    @Field(() => String,
+        {
+            description: "The name of the list"
+        })
+    name: string
+
+    @Field(() => [Todo],
+        {
+            description: "The todos of the list",
+            defaultValue: []
+        })
+    todos: Todo[]
+}

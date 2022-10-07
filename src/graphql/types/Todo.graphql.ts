@@ -50,3 +50,33 @@ export class Todo {
     deadline: Date
 
 }
+
+@InputType()
+export class TodoInput {
+    @Field(() => String,
+        {
+            description: "The title of the to-do"
+        })
+    title: string
+
+    @Field(() => String,
+        {
+            description: "The priority of the to-do"
+        })
+    priority: PriorityEnum
+
+    @Field(() => String,
+        {
+            description: "The status of the to-do",
+            defaultValue: StatusEnum.Todo
+        })
+    status: StatusEnum
+
+    @Field(() => Date,
+        {
+            description: "The status of the to-do",
+            nullable: true
+        })
+    deadline: Date
+
+}

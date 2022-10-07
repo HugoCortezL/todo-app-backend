@@ -1,5 +1,5 @@
 import userModel from '../models/User'
-import {User, UserInput, UserLogin} from '../../graphql/types'
+import {User, UserInput, UserLogin, List} from '../../graphql/types'
 
 export class UserRepository {
 
@@ -14,6 +14,14 @@ export class UserRepository {
         return (user as unknown as User)
     }
 
-    
+    async getById(id: string): Promise<User>{
+        const promiseGetById = Promise.resolve(userModel.findOne({ id: id }))
+        const user = await promiseGetById
+        return (user as unknown as User)
+    }
 
+    async getListsById(id: string): Promise<List[]>{
+        const user = await this.getById(id)
+        return (user.lists as unknown as List[])
+    }
 }
