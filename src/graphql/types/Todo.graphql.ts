@@ -15,7 +15,7 @@ export enum StatusEnum {
 }
 
 @ObjectType()
-@InputType("TodoInput")
+@InputType("TodoInput2")
 export class Todo {
     @Field(() => String,
         {

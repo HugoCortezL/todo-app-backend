@@ -27,23 +27,18 @@ export class ListRepository {
     }
 
     async update(userId: string, listId: string, newList: ListInput): Promise<boolean> {
-        const getUser = await this.userRepository.getById(userId)
-        let lists =  getUser.lists
-        let listToEdit = lists.find(list => list._id == listId)
-        if(!listToEdit){
-            return false
-        }
-        lists = lists.filter(list => list._id != listId)
-        const listEdited:List = {
-            _id: listToEdit._id,
-            name: newList.name,
-            todos: newList.todos
+        const lists = await this.userRepository.getListsById(userId)
+        
+        const newLists = lists.map(list => {
+            if(list._id == listId){
+                return {_id: list._id, name: newList.name, todos: newList.todos}
+            }
+            return list
+        })
 
-        }
-        lists.push(listEdited)
         const sucessPromise = Promise.resolve(userModel.updateOne({ _id: userId }, {
             $set: {
-                lists: lists
+                lists: newLists
             }
         }))
         const success = await sucessPromise
