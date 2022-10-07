@@ -33,11 +33,11 @@ export class UserRepository {
     }
 
     async getById(id: string): Promise<User>{
-        const promiseGetById = Promise.resolve(userModel.findOne({ id: id }))
+        const promiseGetById = Promise.resolve(userModel.findOne({ _id: id }))
         const user = await promiseGetById
         return (user as unknown as User)
     }
-
+    
     async getListsById(id: string): Promise<List[]>{
         const user = await this.getById(id)
         return (user.lists as unknown as List[])
