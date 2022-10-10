@@ -29,6 +29,13 @@ export class Todo {
         })
     title: string
 
+    @Field(() => Boolean,
+        {
+            description: "If the todo item is favorite",
+            defaultValue: false
+        })
+    favorite: boolean
+    
     @Field(() => String,
         {
             description: "The priority of the to-do"
@@ -71,6 +78,13 @@ export class TodoInput {
             defaultValue: StatusEnum.Todo
         })
     status: StatusEnum
+
+    @Field(() => Boolean,
+        {
+            description: "If the todo item is favorite",
+            defaultValue: false
+        })
+    favorite: boolean
 
     @Field(() => String,
         {

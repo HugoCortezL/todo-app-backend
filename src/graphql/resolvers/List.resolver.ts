@@ -1,5 +1,5 @@
 import { ListRepository } from '../../database/repository'
-import { Arg, Mutation, Resolver } from 'type-graphql'
+import { Arg, Mutation, Resolver, Query } from 'type-graphql'
 import { List, ListInput } from '../types'
 
 @Resolver(() => List)
@@ -72,5 +72,25 @@ export class ListResolver {
     ): Promise<boolean> {
         const success = await this.repository.delete(userId, listId)
         return success
+    }
+
+    @Query(() => List,
+        {
+            description: "Get list by id"
+        })
+    async getListById(
+        @Arg("userId",
+            {
+                description: "The id of the user"
+            })
+        userId: string,
+        @Arg("listId",
+            {
+                description: "The id of the list"
+            })
+        listId: string
+    ): Promise<List> {
+        const list = await this.repository.getById(userId, listId)
+        return list
     }
 }

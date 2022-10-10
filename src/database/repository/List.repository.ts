@@ -31,7 +31,7 @@ export class ListRepository {
         
         const newLists = lists.map(list => {
             if(list._id == listId){
-                return {_id: list._id, name: newList.name, todos: newList.todos}
+                return {_id: list._id, name: newList.name, todos: list.todos}
             }
             return list
         })
@@ -56,5 +56,20 @@ export class ListRepository {
         }))
         const success = await sucessPromise
         return success.acknowledged
+    }
+
+    async getById(userId: string, listId:string): Promise<List>{
+        const getUser = await this.userRepository.getById(userId)
+        const lists =  getUser.lists
+        let newList:List = {
+            _id: "",
+            name: "",
+            todos: []
+        } 
+        const listToReturn = lists.find(list => list._id === listId)
+        if(listToReturn) {
+            return listToReturn
+        }
+        return newList
     }
 }

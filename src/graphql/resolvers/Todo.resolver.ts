@@ -89,4 +89,29 @@ export class TodoResolver {
         return success
     }
 
+    @Mutation(() => Boolean,
+        {
+            description: "Edit a list"
+        })
+    async favoriteTodo(
+        @Arg("userId",
+            {
+                description: "The id of the user"
+            })
+        userId: string,
+        @Arg("listId",
+            {
+                description: "The id of the list"
+            })
+        listId: string,
+        @Arg("todoId",
+            {
+                description: "The id of the todo"
+            })
+        todoId: string
+    ): Promise<boolean> {
+        const success = await this.repository.favorite(userId, listId, todoId)
+        return success
+    }
+
 }

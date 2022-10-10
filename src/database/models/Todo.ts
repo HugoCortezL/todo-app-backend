@@ -15,6 +15,11 @@ const todoSchema = new mongoose.Schema({
         enum: PriorityEnum,
         required: true
     },
+    favorite: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     status: {
         type: String,
         enum: StatusEnum,
