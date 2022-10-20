@@ -1,5 +1,5 @@
 import { Arg, Mutation, Resolver, Query } from 'type-graphql'
-import { User, UserInput, UserLogin, List } from '../types'
+import { User, UserInput, UserLogin, List, UserLoginResult } from '../types'
 import { UserRepository } from '../../database/repository'
 
 @Resolver(() => User)
@@ -9,7 +9,7 @@ export class UserResolver {
         this.repository = new UserRepository()
     }
 
-    @Mutation(() => User,
+    @Mutation(() => UserLoginResult,
         {
             description: "Login an user"
         }
@@ -20,7 +20,7 @@ export class UserResolver {
                 description: "The object of the user"
             })
         userLogin: UserLogin
-    ): Promise<User> {
+    ): Promise<UserLoginResult> {
         const user = await this.repository.login(userLogin)
         return user
     }
@@ -37,8 +37,27 @@ export class UserResolver {
             })
         id: string
     ): Promise<List[]> {
+        if(id == ""){
+            return []
+        }
         const lists = await this.repository.getListsById(id)
         return lists
+    }
+    
+    @Query(() => User,
+        {
+            description: "Get user by token"
+        }
+    )
+    async getUserByToken(
+        @Arg("token",
+            {
+                description: "The token of the user"
+            })
+        token: string
+    ): Promise<User> {
+        const user = await this.repository.getUserByToken(token)
+        return user
     }
 
     @Mutation(() => User,

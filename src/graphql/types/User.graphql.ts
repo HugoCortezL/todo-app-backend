@@ -29,9 +29,11 @@ export class User {
 
     @Field(() => String,
     {
-        description: "The date of the last login of the user"
+        description: "The token of the user",
+        defaultValue: "",
+        nullable: true
     })
-    lastLogin: string
+    token: string
     
     @Field(() => [List],
         {
@@ -80,5 +82,21 @@ export class UserLogin {
             description: "The password of the user"
         })
     password: string
+
+}
+@ObjectType()
+export class UserLoginResult {
+
+    @Field(() => String,
+        {
+            description: "The name of the user"
+        })
+    name: string
+
+    @Field(() => String,
+    {
+        description: "The token of the user"
+    })
+    token: string
 
 }

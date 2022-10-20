@@ -16,9 +16,10 @@ export const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    lastLogin: {
+    token: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     },
     lists: [
         {
