@@ -5,8 +5,19 @@ import {v4} from 'uuid'
 export class UserRepository {
 
     async create(item: UserInput): Promise<User> {
+        const oldUserPromise = Promise.resolve(userModel.findOne({ email: item.email }))
+        const oldUser = await oldUserPromise
+        if (oldUser){
+            return {
+                id: "",
+                name: "",
+                email: "",
+                password: "",
+                token: "",
+                lists: []
+            }
+        }
         const user = await userModel.create(item)
-        console.log(item)
         return (user as unknown as User)
     }
 
@@ -40,7 +51,6 @@ export class UserRepository {
     async getUserByToken(token: string): Promise<User>{
         const userByTokenPromise = Promise.resolve(userModel.findOne({ token: token }))
         const user = await userByTokenPromise
-        console.log(user)
         if(user){
             return (user as unknown as User)
         }
