@@ -1,13 +1,13 @@
 <h1 align="center"> Todo App Backend</h1>
 
-<nav align="center">
+<p align="center">
     <a href="#about">About</a>
     - <a href="#technologies">Technologies</a>
     - <a href="#Features">Features</a>
     - <a href="#pre">Prerequisites</a>
     - <a href="#running">Running the application</a>
     - <a href="#personal">Personal</a>
-</nav>
+</p>
  
 <h2 id="about">About ✨</h2>
  
