@@ -12,6 +12,9 @@ export class TodoRepository {
 
     async create(userId: string, listId: string, item: TodoInput): Promise<boolean> {
         const lists = await this.userRepository.getListsById(userId)
+        if(item.deadline.indexOf("-") < 0){
+            item = {...item, deadline: ""}
+        }
         const newTodo: Todo = {
             _id: v4(),
             title: item.title,
