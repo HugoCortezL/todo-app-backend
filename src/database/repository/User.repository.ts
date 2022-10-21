@@ -2,7 +2,6 @@ import userModel from '../models/User'
 import {User, UserInput, UserLogin, List, UserLoginResult} from '../../graphql/types'
 import {v4} from 'uuid'
 import bcrypt from 'bcryptjs';
-//import jwt from 'jsonwebtoken';
 
 export class UserRepository {
 
