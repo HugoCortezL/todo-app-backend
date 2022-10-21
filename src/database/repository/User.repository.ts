@@ -1,6 +1,8 @@
 import userModel from '../models/User'
 import {User, UserInput, UserLogin, List, UserLoginResult} from '../../graphql/types'
 import {v4} from 'uuid'
+import bcrypt from 'bcryptjs';
+//import jwt from 'jsonwebtoken';
 
 export class UserRepository {
 
@@ -17,35 +19,39 @@ export class UserRepository {
                 lists: []
             }
         }
+        const hashedPassword = await bcrypt.hash(item.password, 12)
+        item = {...item, password: hashedPassword}
         const user = await userModel.create(item)
         return (user as unknown as User)
     }
 
     async login(item: UserLogin): Promise<UserLoginResult> {
-        const promiseGetById = Promise.resolve(userModel.findOne({ email: item.email, password: item.password }))
+        const promiseGetById = Promise.resolve(userModel.findOne({ email: item.email }))
         const user = await promiseGetById
         if(user){
-            const token = v4()
-            const updateUserPromise = Promise.resolve(userModel.updateOne({ _id: user._id }, {
-                $set: {
+            const isEqual = await bcrypt.compare(item.password, user.password)
+            if(isEqual){
+                const token = v4()
+                const updateUserPromise = Promise.resolve(userModel.updateOne({ _id: user._id }, {
+                    $set: {
+                        token: token
+                    }
+                }))
+                await updateUserPromise
+                
+                const userResult: UserLoginResult = {
+                    name: user.name,
                     token: token
                 }
-            }))
-            await updateUserPromise
-            
-            const userResult: UserLoginResult = {
-                name: user.name,
-                token: token
+                return userResult
             }
-            return userResult
         }
-        else{
-            const noneUser: UserLoginResult = {
-                name: "",
-                token: ""
-            }
-            return noneUser
+        const noneUser: UserLoginResult = {
+            name: "",
+            token: ""
         }
+        return noneUser
+        
     }
 
     async getUserByToken(token: string): Promise<User>{
