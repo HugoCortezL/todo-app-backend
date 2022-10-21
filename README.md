@@ -27,7 +27,7 @@ The project aims to create the backend for a to-do list application. You can see
 * [X] API for List
 * [X] API for Todo
 * [X] First security level
-* [X] All security features
+* [ ] All security features
 
 <h2 id="pre">Prerequisites ✏️</h2>
  
